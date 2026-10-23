@@ -31,7 +31,7 @@ Une page d'aide intégrée conseille le matériel : boîtiers USB testés, inté
 
 - PC Windows 11 avec contrôleur FireWire Texas Instruments OHCI : capture DV testable dès le MVP.
 - Caméscope DV.
-- Pinnacle Dazzle DVC 90, 100 ou 101 (modèle exact à confirmer). Ces modèles n'ont pas de pilote officiel pour Windows 10 et 11 en 64 bits : s'il n'est pas reconnu, il faudra un boîtier UVC récent, qui servira aussi de référence pour la liste de matériel conseillé.
+- Pinnacle Dazzle DVC100 : reconnu par Windows 11 64 bits et vu par FFmpeg (vidéo et audio séparés). La qualité de capture reste à mesurer au MVP. Il n'a pas de pilote macOS : un boîtier UVC récent servira pour les essais sur Mac et pour la liste de matériel conseillé.
 
 ## 3. Fonctionnalités
 
@@ -200,7 +200,7 @@ Le risque principal est le matériel : chaque boîtier de capture se comporte di
 
 | Risque | Impact | Parade |
 | --- | --- | --- |
-| Dazzle DVC 90/100/101 sans pilote 64 bits | Capture analogique impossible à tester avec le matériel actuel | Vérifier dès le socle ; sinon boîtier UVC récent |
+| Dazzle DVC100 : boîtier ancien, sans pilote macOS | Essais analogiques limités à Windows | Reconnu sous Windows 11 (23 octobre 2026) ; boîtier UVC récent pour macOS |
 | FireWire absent des Mac récents et des PC modernes | Capture DV limitée | DV sous Windows avec port ou carte FireWire TI ; sur Mac, import de fichiers .dv |
 | Capture DV sous Windows | FFmpeg dshow ne donne pas forcément le flux DV brut avec ses dates | Prototype tôt : dvrescue seul, ou FFmpeg pour la capture puis dvrescue pour l'analyse |
 | Boîtiers USB bas de gamme (clones EasyCAP) instables | Images perdues, décalage son/image | Liste de matériel testé, surveillance des pertes, resynchronisation audio |
@@ -229,7 +229,6 @@ Le 23 octobre 2026 :
 
 ## 9. Points ouverts
 
-- Modèle exact du Dazzle et reconnaissance par Windows 11.
 - Méthode de capture DV sous Windows (dvrescue ou FFmpeg), à trancher par un prototype.
 - Signature des installateurs : reprendre la décision d'Afterdusk ou non.
 - Support FireWire dans macOS 26 : à confirmer.
