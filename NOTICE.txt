@@ -1,0 +1,17 @@
+Numéris
+Copyright © 2026 Lewis Bedar
+Logiciel libre sous licence GNU GPL version 3 ou ultérieure (voir LICENSE).
+
+Composants tiers livrés avec Numéris :
+
+- FFmpeg 9.0.2 (ffmpeg, ffprobe), GNU GPL version 2 ou ultérieure dans les
+  constructions utilisées (x264 compris). Programmes séparés, non modifiés.
+  Code source correspondant : https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz
+  Constructions : Windows, https://github.com/BtbN/FFmpeg-Builds ;
+  macOS, https://ffmpeg.martin-riedl.de
+- Manrope, SIL Open Font License 1.1 (https://github.com/sharanda/manrope)
+- JetBrains Mono, SIL Open Font License 1.1 (https://github.com/JetBrains/JetBrainsMono)
+- Lucide (icônes), licence ISC (https://lucide.dev)
+- SQLite, domaine public (https://sqlite.org)
+- Tauri, React et les autres bibliothèques listées dans package.json et
+  src-tauri/Cargo.toml, sous leurs licences respectives (MIT, Apache 2.0 ou BSD).
