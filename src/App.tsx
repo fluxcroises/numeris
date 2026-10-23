@@ -4,6 +4,7 @@ import { Sidebar } from "./components/Sidebar";
 import { StatusBar } from "./components/StatusBar";
 import { TitleBar } from "./components/TitleBar";
 import { useApp } from "./store/app";
+import { CaptureView } from "./views/CaptureView";
 import { LibraryView } from "./views/LibraryView";
 import { PlayerView } from "./views/PlayerView";
 import { SettingsView } from "./views/SettingsView";
@@ -25,6 +26,8 @@ export default function App() {
           <SettingsView />
         ) : view === "player" ? (
           <PlayerView />
+        ) : view === "capture" ? (
+          <CaptureView />
         ) : (
           <LibraryView />
         )}

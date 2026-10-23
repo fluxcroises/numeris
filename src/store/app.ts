@@ -3,7 +3,7 @@ import { create } from "zustand";
 import * as api from "../api";
 import i18n, { systemLanguage } from "../i18n";
 
-export type View = "library" | "settings" | "player";
+export type View = "library" | "settings" | "player" | "capture";
 
 /** Filtre de la bibliothèque choisi dans le panneau latéral. */
 export type LibraryFilter =

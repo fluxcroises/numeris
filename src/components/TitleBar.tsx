@@ -11,6 +11,7 @@ export function TitleBar() {
   const { t } = useTranslation();
   const setView = useApp((s) => s.setView);
   const view = useApp((s) => s.view);
+  const libraryOpen = useApp((s) => s.libraryOpen);
   const win = isTauri() ? getCurrentWindow() : null;
 
   return (
@@ -28,8 +29,8 @@ export function TitleBar() {
       <button
         type="button"
         className="button button-primary"
-        disabled
-        title={t("titleBar.digitizeSoon")}
+        disabled={!libraryOpen}
+        onClick={() => setView("capture")}
       >
         <Circle size={12} fill="currentColor" aria-hidden="true" />
         {t("titleBar.digitize")}

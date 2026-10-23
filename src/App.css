@@ -509,6 +509,150 @@
   background: var(--nm-accent);
 }
 
+/* Formulaires */
+
+.form {
+  max-width: 560px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.form p {
+  margin: 0;
+}
+
+.form-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--nm-text-secondary);
+}
+
+.form-row .select,
+.field-input {
+  width: 100%;
+  height: 34px;
+  color: var(--nm-text);
+}
+
+.field-input {
+  padding: 0 10px;
+  border-radius: var(--nm-radius);
+  border: 1px solid var(--nm-field-border);
+  background: var(--nm-surface);
+  user-select: text;
+}
+
+.form-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  color: var(--nm-text);
+}
+
+/* Capture */
+
+.capture {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.capture-preview {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--nm-chrome);
+}
+
+.capture-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+
+.capture-panel {
+  width: 260px;
+  flex-shrink: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--nm-panel);
+  border-left: 1px solid var(--nm-border);
+}
+
+.capture-counter {
+  font-size: 28px;
+}
+
+.signal {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: var(--nm-radius-small);
+  background: var(--nm-selected);
+  font-weight: 700;
+}
+
+.signal-ok {
+  color: var(--nm-ready);
+}
+
+.signal-black,
+.signal-snow {
+  color: var(--nm-todo);
+}
+
+.meters {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meter {
+  height: 8px;
+  border-radius: 2px;
+  background: var(--nm-hover);
+  overflow: hidden;
+}
+
+.meter-bar {
+  height: 100%;
+  background: var(--nm-ready);
+}
+
+.meter-bar.warm {
+  background: var(--nm-todo);
+}
+
+.meter-bar.hot {
+  background: var(--nm-danger);
+}
+
+.capture-stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 6px;
+}
+
+.capture-stats dt {
+  color: var(--nm-text-secondary);
+}
+
+.capture-stats dd {
+  margin: 0;
+  text-align: right;
+}
+
 /* Barre d'état */
 
 .statusbar {
