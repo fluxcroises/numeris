@@ -1,0 +1,27 @@
+# Journaux
+logs
+*.log
+npm-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Éditeurs
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.sw?
+
+# Rust
+src-tauri/target/
+
+# FFmpeg et dvrescue : récupérés par scripts/fetch-ffmpeg.mjs, jamais versionnés
+src-tauri/resources/ffmpeg/
+src-tauri/resources/dvrescue/
+
+# Échantillons vidéo de test lourds (captures réelles) : non versionnés
+test-assets/captures/
