@@ -1,5 +1,6 @@
 //! Cœur de Numéris : pilotage de FFmpeg, catalogue, bibliothèque et tâches.
 
+mod capture;
 mod commands;
 mod db;
 mod error;
@@ -26,6 +27,8 @@ pub struct AppState {
     /// Bibliothèque ouverte ; absente tant qu'aucun dossier n'est choisi ou
     /// quand son disque n'est pas branché.
     library: Mutex<Option<Library>>,
+    /// Capture en cours : de quoi l'arrêter depuis une commande.
+    capture: Mutex<Option<capture::Stopper>>,
 }
 
 impl AppState {
@@ -35,6 +38,10 @@ impl AppState {
 
     fn library(&self) -> MutexGuard<'_, Option<Library>> {
         self.library.lock().unwrap_or_else(|e| e.into_inner())
+    }
+
+    fn capture(&self) -> MutexGuard<'_, Option<capture::Stopper>> {
+        self.capture.lock().unwrap_or_else(|e| e.into_inner())
     }
 }
 
@@ -67,6 +74,7 @@ pub fn run() {
                 settings_path,
                 settings: Mutex::new(settings),
                 library: Mutex::new(library),
+                capture: Mutex::new(None),
             });
             Ok(())
         })
@@ -80,6 +88,10 @@ pub fn run() {
             commands::library::list_cassettes,
             commands::library::create_cassette,
             commands::media::open_video,
+            commands::capture::list_video_inputs,
+            commands::capture::capture_space,
+            commands::capture::start_capture,
+            commands::capture::stop_capture,
         ])
         .run(tauri::generate_context!())
         .expect("échec du lancement de Numéris");

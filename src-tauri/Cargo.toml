@@ -24,6 +24,8 @@ thiserror = "2"
 rusqlite = { version = "0.40", features = ["bundled"] }
 unicode-normalization = "0.1"
 uuid = { version = "1", features = ["v4"] }
+blake3 = "1.8.7"
+fs4 = "1.1.0"
 
 [dev-dependencies]
 tempfile = "3"

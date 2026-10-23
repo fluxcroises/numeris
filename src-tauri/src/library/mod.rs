@@ -14,7 +14,7 @@ use unicode_normalization::UnicodeNormalization;
 
 use crate::db;
 use crate::error::{Error, Result};
-use cassette::{CassetteFile, FORMAT_VERSION, TapeFormat, TvStandard, is_partial_date};
+use cassette::{CassetteFile, FORMAT_VERSION, MasterFile, TapeFormat, TvStandard, is_partial_date};
 
 /// Dossier des fichiers internes de Numéris dans la bibliothèque.
 pub const APP_DIR: &str = ".numeris";
@@ -32,6 +32,16 @@ pub struct NewCassette {
     pub format: TapeFormat,
     pub tv_standard: Option<TvStandard>,
     pub recorded_from: Option<String>,
+}
+
+/// Master terminé, à enregistrer (noms de fichiers relatifs au dossier de la cassette).
+#[derive(Debug, Clone)]
+pub struct MasterRecord {
+    pub file: String,
+    pub blake3: String,
+    pub framemd5: String,
+    pub duration_ms: u64,
+    pub field_order: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -116,6 +126,53 @@ impl Library {
             return Err(e);
         }
         let id = self.conn.last_insert_rowid();
+        self.cassette(id)
+    }
+
+    /// Dossier d'une cassette et sa norme (PAL par défaut).
+    pub fn cassette_dir(&self, id: i64) -> Result<(PathBuf, TvStandard)> {
+        let (folder, standard): (String, Option<String>) = self.conn.query_row(
+            "SELECT folder, tv_standard FROM cassettes WHERE id = ?1",
+            [id],
+            |r| Ok((r.get(0)?, r.get(1)?)),
+        )?;
+        let standard = standard
+            .as_deref()
+            .and_then(TvStandard::parse)
+            .unwrap_or(TvStandard::Pal);
+        Ok((self.root.join(folder), standard))
+    }
+
+    /// Enregistre un master terminé et ses empreintes, au catalogue et dans
+    /// `cassette.json` ; la cassette passe à l'état « à traiter ».
+    pub fn record_master(&mut self, id: i64, master: MasterRecord) -> Result<CassetteSummary> {
+        let (dir, _) = self.cassette_dir(id)?;
+        let mut file = CassetteFile::read(&dir)?;
+        file.master = Some(MasterFile {
+            file: master.file.clone(),
+            blake3: Some(master.blake3.clone()),
+            framemd5: Some(master.framemd5.clone()),
+            field_order: master.field_order.clone(),
+        });
+        file.duration_ms = Some(master.duration_ms);
+        file.write(&dir)?;
+        let folder = dir
+            .file_name()
+            .map(|f| f.to_string_lossy().into_owned())
+            .unwrap_or_default();
+        self.conn.execute(
+            "UPDATE cassettes SET master_path = ?2, master_blake3 = ?3, duration_ms = ?4,
+                    field_order = ?5, status = 'captured',
+                    updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+             WHERE id = ?1",
+            params![
+                id,
+                format!("{folder}/{}", master.file),
+                master.blake3,
+                master.duration_ms as i64,
+                master.field_order,
+            ],
+        )?;
         self.cassette(id)
     }
 
@@ -273,6 +330,38 @@ mod tests {
             .map(|e| e.unwrap().file_name())
             .collect();
         assert_eq!(entries, vec![std::ffi::OsString::from(APP_DIR)]);
+    }
+
+    #[test]
+    fn records_master_in_catalogue_and_json() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut lib = Library::open(dir.path()).unwrap();
+        let c = lib.create_cassette(new("Noël", Some("1998"))).unwrap();
+        let (cassette_dir, standard) = lib.cassette_dir(c.id).unwrap();
+        assert_eq!(standard, TvStandard::Pal);
+        let updated = lib
+            .record_master(
+                c.id,
+                MasterRecord {
+                    file: "master.mkv".into(),
+                    blake3: "ab".repeat(32),
+                    framemd5: "master.framemd5".into(),
+                    duration_ms: 10_030_000,
+                    field_order: Some("tff".into()),
+                },
+            )
+            .unwrap();
+        assert_eq!(updated.status, "captured");
+        assert_eq!(updated.duration_ms, Some(10_030_000));
+        let file = CassetteFile::read(&cassette_dir).unwrap();
+        let master = file.master.unwrap();
+        assert_eq!(master.file, "master.mkv");
+        assert_eq!(master.field_order.as_deref(), Some("tff"));
+        let path: String = lib
+            .conn
+            .query_row("SELECT master_path FROM cassettes", [], |r| r.get(0))
+            .unwrap();
+        assert_eq!(path, "1998-noel/master.mkv");
     }
 
     #[test]

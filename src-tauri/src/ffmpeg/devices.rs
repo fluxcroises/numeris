@@ -44,6 +44,66 @@ pub fn list() -> Result<Vec<CaptureDevice>> {
     })
 }
 
+/// Entrée vidéo d'un boîtier (broche de son « crossbar » DirectShow).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct VideoInput {
+    pub pin: u32,
+    /// Nom donné par le pilote : « Video Composite », « S-Video »…
+    pub name: String,
+    pub s_video: bool,
+}
+
+/// Entrées vidéo proposées par un boîtier DirectShow ; vide ailleurs ou quand
+/// le boîtier n'en a qu'une.
+pub fn video_inputs(device_id: &str) -> Result<Vec<VideoInput>> {
+    if !cfg!(windows) {
+        return Ok(vec![]);
+    }
+    let output = super::ffmpeg()?
+        .args(["-hide_banner", "-list_options", "true", "-f", "dshow", "-i"])
+        .arg(format!("video={device_id}"))
+        .output()?;
+    Ok(parse_crossbar(&String::from_utf8_lossy(&output.stderr)))
+}
+
+/// `Crossbar Output pin 0: "Video Decoder" … compatible input pins: 2 3`
+/// puis `Crossbar Input pin 3 - "S-Video" related input pin: 5`.
+pub(crate) fn parse_crossbar(text: &str) -> Vec<VideoInput> {
+    let mut compatible: Vec<u32> = Vec::new();
+    let mut names: Vec<(u32, String)> = Vec::new();
+    for line in text.lines() {
+        let msg = message(line);
+        if let Some(rest) = msg.trim().strip_prefix("Crossbar Output pin ")
+            && rest.contains("\"Video Decoder\"")
+            && let Some((_, pins)) = rest.split_once("compatible input pins:")
+        {
+            compatible = pins
+                .split_whitespace()
+                .filter_map(|p| p.parse().ok())
+                .collect();
+        } else if let Some(rest) = msg.trim().strip_prefix("Crossbar Input pin ")
+            && let Some((pin, rest)) = rest.split_once(" - \"")
+            && let Some((name, _)) = rest.split_once('"')
+            && let Ok(pin) = pin.trim().parse()
+        {
+            names.push((pin, name.to_owned()));
+        }
+    }
+    names
+        .into_iter()
+        .filter(|(pin, _)| compatible.contains(pin))
+        .map(|(pin, name)| VideoInput {
+            pin,
+            s_video: {
+                let n = name.to_lowercase();
+                n.contains("s-video") || n.contains("svideo")
+            },
+            name,
+        })
+        .collect()
+}
+
 /// Retire le préfixe « [in#0 @ 000002e0f1e40ac0] » d'une ligne de journal.
 fn message(line: &str) -> &str {
     let line = line.trim();
@@ -168,6 +228,26 @@ Error opening input file dummy."#;
         let devices = parse_dshow(text);
         assert_eq!(devices.len(), 2);
         assert!(devices.iter().all(|d| d.id == "@x"));
+    }
+
+    #[test]
+    fn parses_crossbar_of_dazzle() {
+        // Sortie relevée avec un Dazzle DVC100 sous Windows 11.
+        let text = r#"[in#0 @ 0] Crossbar Switching Information for Dazzle DVC100 Video Device:
+[in#0 @ 0]   Crossbar Output pin 0: "Video Decoder" related output pin: 1 current input pin: 2 compatible input pins: 2 3
+[in#0 @ 0]   Crossbar Output pin 1: "Audio Decoder" related output pin: 0 current input pin: 5 compatible input pins: 5
+[in#0 @ 0]   Crossbar Input pin 0 - "Video AUX" related input pin: 6
+[in#0 @ 0]   Crossbar Input pin 1 - "Video Tuner" related input pin: 4
+[in#0 @ 0]   Crossbar Input pin 2 - "Video Composite" related input pin: 5
+[in#0 @ 0]   Crossbar Input pin 3 - "S-Video" related input pin: 5
+[in#0 @ 0]   Crossbar Input pin 5 - "Audio Line" related input pin: 2"#;
+        let inputs = parse_crossbar(text);
+        assert_eq!(inputs.len(), 2);
+        assert_eq!(inputs[0].pin, 2);
+        assert_eq!(inputs[0].name, "Video Composite");
+        assert!(!inputs[0].s_video);
+        assert_eq!(inputs[1].pin, 3);
+        assert!(inputs[1].s_video);
     }
 
     #[test]

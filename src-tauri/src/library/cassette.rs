@@ -51,6 +51,15 @@ pub enum TvStandard {
 }
 
 impl TvStandard {
+    pub fn parse(s: &str) -> Option<TvStandard> {
+        match s {
+            "pal" => Some(TvStandard::Pal),
+            "secam" => Some(TvStandard::Secam),
+            "ntsc" => Some(TvStandard::Ntsc),
+            _ => None,
+        }
+    }
+
     pub fn as_str(self) -> &'static str {
         match self {
             TvStandard::Pal => "pal",
@@ -67,6 +76,9 @@ pub struct MasterFile {
     pub file: String,
     pub blake3: Option<String>,
     pub framemd5: Option<String>,
+    /// Ordre des trames estimé à la capture : « tff », « bff » ou « progressive ».
+    #[serde(default)]
+    pub field_order: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -109,8 +121,6 @@ pub struct CassetteFile {
 }
 
 impl CassetteFile {
-    // Servira au MVP à reconstruire le catalogue depuis les dossiers.
-    #[cfg(test)]
     pub fn read(dir: &Path) -> Result<CassetteFile> {
         Ok(serde_json::from_slice(&fs::read(dir.join(CASSETTE_FILE))?)?)
     }
