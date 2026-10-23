@@ -2,6 +2,8 @@
 
 use serde::Serialize;
 
+use crate::db::DbError;
+
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("FFmpeg est introuvable")]
@@ -11,10 +13,22 @@ pub enum Error {
         program: &'static str,
         message: String,
     },
+    #[error("aucune bibliothèque n'est choisie")]
+    NoLibrary,
+    #[error("{0}")]
+    Invalid(String),
+    #[error(transparent)]
+    Db(#[from] DbError),
     #[error(transparent)]
     Io(#[from] std::io::Error),
     #[error(transparent)]
     Json(#[from] serde_json::Error),
+}
+
+impl From<rusqlite::Error> for Error {
+    fn from(e: rusqlite::Error) -> Self {
+        Error::Db(DbError::Sqlite(e))
+    }
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
