@@ -1,0 +1,488 @@
+/* Mise en page « appli de bureau » (docs/charte-graphique.md). */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.secondary {
+  color: var(--nm-text-secondary);
+}
+
+.mono {
+  font-family: var(--nm-mono);
+  font-size: 12px;
+}
+
+.error-text {
+  color: var(--nm-danger);
+}
+
+.accent-icon {
+  color: var(--nm-accent);
+}
+
+.section-title {
+  margin: 0;
+  padding: 14px 10px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nm-text-muted);
+}
+
+/* Logo */
+
+.logo {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--nm-radius);
+  background: var(--nm-accent);
+  color: var(--nm-on-accent);
+}
+
+/* Boutons et champs */
+
+.button {
+  height: 30px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--nm-radius);
+  border: 1px solid var(--nm-field-border);
+  background: var(--nm-selected);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--nm-hover);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.button-primary {
+  border: 0;
+  background: var(--nm-accent);
+  color: var(--nm-on-accent);
+  font-weight: 800;
+}
+
+.button-primary:hover:not(:disabled) {
+  background: var(--nm-accent-hover);
+}
+
+.button-large {
+  height: 44px;
+  padding: 0 22px;
+  font-size: 15px;
+}
+
+.icon-button {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--nm-radius);
+  background: transparent;
+  color: var(--nm-text-secondary);
+  cursor: pointer;
+}
+
+.icon-button:hover,
+.icon-button.active {
+  background: var(--nm-selected);
+  color: var(--nm-text);
+}
+
+.field {
+  height: 30px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--nm-radius);
+  border: 1px solid var(--nm-field-border);
+  background: var(--nm-surface);
+  color: var(--nm-text-secondary);
+}
+
+.field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--nm-text);
+  outline: none;
+}
+
+.select {
+  height: 30px;
+  padding: 0 8px;
+  border-radius: var(--nm-radius);
+  border: 1px solid var(--nm-field-border);
+  background: var(--nm-surface);
+}
+
+/* Barre de titre */
+
+.titlebar {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 14px;
+  background: var(--nm-chrome);
+  border-bottom: 1px solid var(--nm-border);
+}
+
+/* Place des boutons de fenêtre de macOS, à gauche. */
+.titlebar-mac {
+  padding-left: 84px;
+  padding-right: 12px;
+}
+
+.titlebar-brand {
+  width: 196px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.titlebar-name {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.titlebar-search {
+  width: 380px;
+}
+
+.titlebar-spacer {
+  flex: 1;
+  align-self: stretch;
+}
+
+.window-controls {
+  display: flex;
+  align-self: stretch;
+  margin-left: 4px;
+}
+
+.window-controls button {
+  width: 46px;
+  border: 0;
+  background: transparent;
+  color: var(--nm-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.window-controls button:hover {
+  background: var(--nm-selected);
+  color: var(--nm-text);
+}
+
+.window-controls .window-close:hover {
+  background: var(--nm-danger);
+  color: var(--nm-on-accent);
+}
+
+/* Panneau latéral */
+
+.sidebar {
+  width: 210px;
+  flex-shrink: 0;
+  padding: 0 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--nm-chrome);
+  border-right: 1px solid var(--nm-border);
+  overflow-y: auto;
+}
+
+.sidebar-item {
+  height: 30px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--nm-text-secondary);
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background: var(--nm-surface);
+  color: var(--nm-text);
+}
+
+.sidebar-item.current {
+  background: var(--nm-selected);
+  color: var(--nm-text);
+  font-weight: 700;
+}
+
+.sidebar-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-count {
+  color: var(--nm-text-secondary);
+  font-weight: 400;
+}
+
+.status-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  border-radius: 50%;
+  background: var(--nm-text-muted);
+}
+
+.status-captured {
+  background: var(--nm-todo);
+}
+
+.status-ready {
+  background: var(--nm-ready);
+}
+
+.status-exported {
+  background: var(--nm-exported);
+}
+
+/* Contenu */
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  user-select: text;
+}
+
+.content-header {
+  height: 40px;
+  flex-shrink: 0;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--nm-border);
+}
+
+.content-header h1 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+}
+
+.empty-state h1,
+.empty-state h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.empty-state p {
+  max-width: 460px;
+  margin: 0;
+  color: var(--nm-text-secondary);
+  font-size: 14px;
+}
+
+.cassette-grid {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  align-content: start;
+}
+
+.cassette-card {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: var(--nm-radius);
+}
+
+.cassette-card:hover {
+  background: var(--nm-surface);
+}
+
+/* Format 4:3 des cassettes. */
+.cassette-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--nm-radius-small);
+}
+
+.tone-1 {
+  background: var(--nm-tone-1);
+}
+.tone-2 {
+  background: var(--nm-tone-2);
+}
+.tone-3 {
+  background: var(--nm-tone-3);
+}
+.tone-4 {
+  background: var(--nm-tone-4);
+}
+.tone-5 {
+  background: var(--nm-tone-5);
+}
+.tone-6 {
+  background: var(--nm-tone-6);
+}
+
+.thumb-duration {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  padding: 2px 6px;
+  border-radius: var(--nm-radius-small);
+  background: var(--nm-chrome);
+  font-family: var(--nm-mono);
+  font-size: 11px;
+}
+
+.cassette-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+}
+
+.cassette-title h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cassette-meta {
+  padding: 0 4px 4px 18px;
+  font-size: 12px;
+  color: var(--nm-text-secondary);
+}
+
+/* Réglages */
+
+.settings-section {
+  max-width: 760px;
+  padding: 8px 16px 16px;
+}
+
+.settings-section .section-title {
+  padding-left: 0;
+}
+
+.settings-row {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--nm-border);
+}
+
+.settings-label {
+  width: 200px;
+  flex-shrink: 0;
+  color: var(--nm-text-secondary);
+}
+
+.settings-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.device-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.device-list li {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.device-name {
+  flex: 1;
+}
+
+/* Barre d'état */
+
+.statusbar {
+  height: 28px;
+  flex-shrink: 0;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--nm-chrome);
+  border-top: 1px solid var(--nm-border);
+  font-size: 12px;
+  color: var(--nm-text-secondary);
+}
+
+.statusbar-spacer {
+  flex: 1;
+}

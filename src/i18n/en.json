@@ -1,0 +1,91 @@
+{
+  "app": {
+    "name": "Numéris"
+  },
+  "titleBar": {
+    "search": "Search the library",
+    "digitize": "Digitize a tape",
+    "digitizeSoon": "The digitizing assistant comes in the next stage",
+    "settings": "Settings",
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "close": "Close"
+  },
+  "sidebar": {
+    "label": "Library",
+    "cassettes": "Tapes",
+    "all": "All",
+    "formats": "Formats",
+    "tools": "Tools",
+    "player": "Play a video file"
+  },
+  "status": {
+    "to_capture": "To capture",
+    "captured": "To process",
+    "ready": "Ready",
+    "exported": "Exported"
+  },
+  "statusFilter": {
+    "to_capture": "To capture",
+    "captured": "To process",
+    "ready": "Ready",
+    "exported": "Exported"
+  },
+  "format": {
+    "vhs": "VHS",
+    "vhs_c": "VHS-C",
+    "svhs": "S-VHS",
+    "video8": "Video8",
+    "hi8": "Hi8",
+    "digital8": "Digital8",
+    "minidv": "MiniDV",
+    "file": "File"
+  },
+  "library": {
+    "allTitle": "All tapes",
+    "count_one": "{{count}} tape",
+    "count_other": "{{count}} tapes",
+    "noLibraryTitle": "Where should your tapes go?",
+    "noLibraryText": "Choose a folder, on this computer or on an external drive. Numéris will create one folder per tape, readable even without the app.",
+    "chooseFolder": "Choose a folder",
+    "missingTitle": "The library cannot be found",
+    "missingText": "The folder {{path}} is not available. Plug in the drive that holds it, or choose another folder.",
+    "emptyTitle": "No tapes yet",
+    "emptyText": "Put a tape next to the computer and follow the guide.",
+    "unknownYear": "Unknown year",
+    "loadError": "Cannot read the library: {{error}}"
+  },
+  "settings": {
+    "title": "Settings",
+    "library": "Library",
+    "libraryFolder": "Library folder",
+    "noFolder": "No folder chosen",
+    "change": "Change…",
+    "language": "Language",
+    "languageSystem": "System language",
+    "hardware": "Capture hardware",
+    "ffmpeg": "Video engine",
+    "ffmpegMissing": "FFmpeg cannot be found: the installation looks incomplete.",
+    "devices": "Detected devices",
+    "refresh": "Refresh",
+    "noDevices": "No capture device detected. Plug in the capture box or the camcorder, then refresh.",
+    "video": "Video",
+    "audio": "Audio",
+    "dv": "DV camcorder (FireWire)"
+  },
+  "player": {
+    "title": "Player",
+    "open": "Open a video file…",
+    "empty": "Open a video file to play it here. Numéris prepares a playback copy when the format cannot be played directly.",
+    "info": "{{width}} × {{height}} · {{codec}} · {{duration}}",
+    "interlaced": "interlaced",
+    "preparing": "Preparing the playback copy… {{percent}}%",
+    "error": "Cannot play: {{error}}",
+    "videoFiles": "Videos"
+  },
+  "statusBar": {
+    "library": "Library: {{path}}",
+    "noLibrary": "No library",
+    "ffmpeg": "FFmpeg {{version}}"
+  }
+}

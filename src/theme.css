@@ -1,0 +1,74 @@
+/* Thème de Numéris (docs/charte-graphique.md). Les composants n'utilisent que
+   ces variables, jamais de couleur en dur. Polices livrées avec l'application. */
+@import "@fontsource-variable/manrope/wght.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+:root {
+  --nm-bg: #15121d;
+  --nm-chrome: #100e17;
+  --nm-panel: #1a1724;
+  --nm-surface: #1f1b2a;
+  --nm-selected: #251f33;
+  --nm-hover: #332d47;
+  --nm-border: #2a2539;
+  --nm-field-border: #2e2940;
+  --nm-text: #efeaf7;
+  --nm-text-secondary: #aba3bf;
+  --nm-text-muted: #8f87a6;
+  --nm-accent: #ff8266;
+  --nm-accent-hover: #ffa28c;
+  --nm-on-accent: #1a1016;
+  --nm-ready: #7fdcc4;
+  --nm-todo: #ff9d86;
+  --nm-exported: #c2badf;
+  --nm-danger: #ff6b6b;
+
+  /* Teintes des vignettes en attendant les vraies images. */
+  --nm-tone-1: #3a2e4a;
+  --nm-tone-2: #24384a;
+  --nm-tone-3: #4a2e3c;
+  --nm-tone-4: #2e4440;
+  --nm-tone-5: #3e3a28;
+  --nm-tone-6: #2c2a3a;
+
+  --nm-font: "Manrope Variable", system-ui, sans-serif;
+  --nm-mono: "JetBrains Mono", ui-monospace, monospace;
+  --nm-radius: 6px;
+  --nm-radius-small: 3px;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--nm-bg);
+  color: var(--nm-text);
+  font-family: var(--nm-font);
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  overflow: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--nm-accent);
+  outline-offset: 1px;
+}

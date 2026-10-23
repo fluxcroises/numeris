@@ -1,0 +1,91 @@
+{
+  "app": {
+    "name": "Numéris"
+  },
+  "titleBar": {
+    "search": "Rechercher dans la bibliothèque",
+    "digitize": "Numériser une cassette",
+    "digitizeSoon": "L'assistant de numérisation arrive à la prochaine étape",
+    "settings": "Réglages",
+    "minimize": "Réduire",
+    "maximize": "Agrandir",
+    "close": "Fermer"
+  },
+  "sidebar": {
+    "label": "Bibliothèque",
+    "cassettes": "Cassettes",
+    "all": "Toutes",
+    "formats": "Supports",
+    "tools": "Outils",
+    "player": "Lire un fichier vidéo"
+  },
+  "status": {
+    "to_capture": "À capturer",
+    "captured": "À traiter",
+    "ready": "Prête",
+    "exported": "Exportée"
+  },
+  "statusFilter": {
+    "to_capture": "À capturer",
+    "captured": "À traiter",
+    "ready": "Prêtes",
+    "exported": "Exportées"
+  },
+  "format": {
+    "vhs": "VHS",
+    "vhs_c": "VHS-C",
+    "svhs": "S-VHS",
+    "video8": "Video8",
+    "hi8": "Hi8",
+    "digital8": "Digital8",
+    "minidv": "MiniDV",
+    "file": "Fichier"
+  },
+  "library": {
+    "allTitle": "Toutes les cassettes",
+    "count_one": "{{count}} cassette",
+    "count_other": "{{count}} cassettes",
+    "noLibraryTitle": "Où ranger vos cassettes ?",
+    "noLibraryText": "Choisissez un dossier, sur cet ordinateur ou sur un disque externe. Numéris y créera un dossier par cassette, lisible même sans l'application.",
+    "chooseFolder": "Choisir un dossier",
+    "missingTitle": "La bibliothèque est introuvable",
+    "missingText": "Le dossier {{path}} n'est pas accessible. Branchez le disque qui le contient, ou choisissez un autre dossier.",
+    "emptyTitle": "Aucune cassette pour l'instant",
+    "emptyText": "Posez une cassette à côté de l'ordinateur et laissez-vous guider.",
+    "unknownYear": "Année inconnue",
+    "loadError": "Impossible de lire la bibliothèque : {{error}}"
+  },
+  "settings": {
+    "title": "Réglages",
+    "library": "Bibliothèque",
+    "libraryFolder": "Dossier de la bibliothèque",
+    "noFolder": "Aucun dossier choisi",
+    "change": "Changer…",
+    "language": "Langue",
+    "languageSystem": "Langue du système",
+    "hardware": "Matériel de capture",
+    "ffmpeg": "Moteur vidéo",
+    "ffmpegMissing": "FFmpeg est introuvable : l'installation semble incomplète.",
+    "devices": "Périphériques détectés",
+    "refresh": "Actualiser",
+    "noDevices": "Aucun périphérique de capture détecté. Branchez le boîtier ou le caméscope, puis actualisez.",
+    "video": "Vidéo",
+    "audio": "Audio",
+    "dv": "Caméscope DV (FireWire)"
+  },
+  "player": {
+    "title": "Lecteur",
+    "open": "Ouvrir un fichier vidéo…",
+    "empty": "Ouvrez un fichier vidéo pour le lire ici. Numéris prépare une copie de lecture quand le format ne peut pas être lu directement.",
+    "info": "{{width}} × {{height}} · {{codec}} · {{duration}}",
+    "interlaced": "entrelacé",
+    "preparing": "Préparation de la copie de lecture… {{percent}} %",
+    "error": "Lecture impossible : {{error}}",
+    "videoFiles": "Vidéos"
+  },
+  "statusBar": {
+    "library": "Bibliothèque : {{path}}",
+    "noLibrary": "Aucune bibliothèque",
+    "ffmpeg": "FFmpeg {{version}}"
+  }
+}
