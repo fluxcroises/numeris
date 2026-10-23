@@ -79,6 +79,7 @@ pub fn run() {
             commands::library::set_language,
             commands::library::list_cassettes,
             commands::library::create_cassette,
+            commands::media::open_video,
         ])
         .run(tauri::generate_context!())
         .expect("échec du lancement de Numéris");

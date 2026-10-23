@@ -3,6 +3,8 @@
 //! bibliothèques : un plantage de FFmpeg ne fait pas tomber l'application.
 
 pub mod devices;
+pub mod probe;
+pub mod proxy;
 
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
@@ -39,6 +41,13 @@ fn tool(name: &str) -> Option<PathBuf> {
 /// Commande ffmpeg prête à recevoir ses arguments.
 pub fn ffmpeg() -> Result<Command> {
     tool("ffmpeg")
+        .map(|p| command(&p))
+        .ok_or(Error::FfmpegMissing)
+}
+
+/// Commande ffprobe prête à recevoir ses arguments.
+pub fn ffprobe() -> Result<Command> {
+    tool("ffprobe")
         .map(|p| command(&p))
         .ok_or(Error::FfmpegMissing)
 }

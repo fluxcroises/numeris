@@ -34,6 +34,31 @@ export interface CaptureDevice {
   dv: boolean;
 }
 
+export interface MediaInfo {
+  durationMs: number | null;
+  width: number | null;
+  height: number | null;
+  videoCodec: string | null;
+  audioCodec: string | null;
+  interlaced: boolean;
+  playable: boolean;
+}
+
+export interface OpenedVideo {
+  info: MediaInfo;
+  /** Absent tant que la copie de lecture se prépare (événement `proxy-progress`). */
+  playPath: string | null;
+}
+
+export interface ProxyEvent {
+  source: string;
+  progress: number;
+  playPath: string | null;
+  error: string | null;
+}
+
+export const openVideo = (path: string) => invoke<OpenedVideo>("open_video", { path });
+
 export const getSettings = () => invoke<Settings>("get_settings");
 
 export const setLibraryDir = (path: string) => invoke<Settings>("set_library_dir", { path });

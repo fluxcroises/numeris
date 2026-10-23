@@ -468,6 +468,47 @@
   flex: 1;
 }
 
+/* Lecteur */
+
+.player {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--nm-chrome);
+}
+
+.player video {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: var(--nm-radius-small);
+  background: var(--nm-chrome);
+}
+
+.player-message {
+  margin: 12px 16px 0;
+}
+
+.progress {
+  width: 280px;
+  height: 6px;
+  appearance: none;
+  border: 0;
+  border-radius: 3px;
+  background: var(--nm-hover);
+  overflow: hidden;
+}
+
+.progress::-webkit-progress-bar {
+  background: var(--nm-hover);
+}
+
+.progress::-webkit-progress-value {
+  background: var(--nm-accent);
+}
+
 /* Barre d'état */
 
 .statusbar {
