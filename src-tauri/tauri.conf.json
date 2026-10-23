@@ -37,6 +37,9 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
+    "resources": {
+      "resources/ffmpeg/": "ffmpeg/"
+    },
     "category": "Video",
     "copyright": "© 2026 Lewis Bedar",
     "shortDescription": "Numérisation des cassettes vidéo de famille",
