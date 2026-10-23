@@ -1,0 +1,34 @@
+[package]
+name = "numeris"
+version = "0.1.0"
+description = "Numérisation et archivage des cassettes vidéo de famille"
+authors = ["Lewis Bedar"]
+license = "GPL-3.0-or-later"
+edition = "2024"
+
+[lib]
+# Le suffixe `_lib` évite un conflit de nom avec le binaire sous Windows
+# (https://github.com/rust-lang/cargo/issues/8519).
+name = "numeris_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+# https://tauri.app/concept/size/#cargo-configuration
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+panic = "abort"
+strip = true

@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Dépendances de l'interface
+        run: npm ci
+
+      - name: Interface — format, lint, types, tests
+        run: |
+          npm run format:check
+          npm run lint
+          npm run typecheck
+          npm test
+
+      - name: Cœur — cargo fmt
+        working-directory: src-tauri
+        run: cargo fmt --all --check
+
+      - name: Cœur — cargo clippy
+        working-directory: src-tauri
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Cœur — cargo test
+        working-directory: src-tauri
+        run: cargo test
+
+      - name: Application — compilation Tauri
+        run: npm run tauri build -- --debug --no-bundle
+
+      - name: Application — essai de lancement
+        # La fenêtre s'ouvre, l'interface s'affiche, puis l'application s'arrête
+        # d'elle-même (NUMERIS_SMOKE) ; au-delà de 3 minutes, elle échoue.
+        shell: bash
+        timeout-minutes: 3
+        env:
+          NUMERIS_SMOKE: "1"
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            ./src-tauri/target/debug/numeris.exe
+          else
+            ./src-tauri/target/debug/numeris
+          fi

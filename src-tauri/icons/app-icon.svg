@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Icône de Numéris : une cassette stylisée sur fond corail (charte graphique). -->
+  <rect x="64" y="64" width="896" height="896" rx="200" fill="#FF8266"/>
+  <rect x="200" y="300" width="624" height="424" rx="56" fill="none" stroke="#1A1016" stroke-width="48"/>
+  <circle cx="380" cy="488" r="72" fill="none" stroke="#1A1016" stroke-width="44"/>
+  <circle cx="644" cy="488" r="72" fill="none" stroke="#1A1016" stroke-width="44"/>
+  <path d="M380 560 H644" stroke="#1A1016" stroke-width="44" stroke-linecap="round"/>
+  <path d="M320 724 L360 640 H664 L704 724" fill="none" stroke="#1A1016" stroke-width="44" stroke-linejoin="round"/>
+</svg>
